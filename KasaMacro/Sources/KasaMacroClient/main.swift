@@ -4,8 +4,9 @@ import KasaMacro
 
 @GenerateReduce([.error, .loading, .refresh])
 @CompositionAction([.initialize, .refresh])
-@CompositionMutation([.error, .loading, .refresh])
-@CompositionState([.error, .loading, .refresh])
+//@CompositionMutation([.error, .loading, .refresh])
+//@CompositionState([.error, .loading, .refresh])
+@CompositionSupport([.error, .loading, .refresh])
 class ExampleReactor: Reactor  {
     enum Action {
     }

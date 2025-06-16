@@ -13,8 +13,10 @@ import Foundation
 import SwiftDiagnostics
 
 /*
+ @ErrorState
+ 
  Reactor Class의 위에 붙여 사용합니다.
- ErrorState, ErrorMutation을 한번에 처리해줍니다.
+ @ErrorState, @ErrorMutation을 한번에 작성해줍니다.
  */
 
 public struct ErrorSupportMacro: MemberAttributeMacro {

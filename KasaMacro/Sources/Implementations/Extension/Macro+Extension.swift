@@ -16,4 +16,3 @@ public extension Macro {
         String(describing: Self.self).replacingOccurrences(of: "Macro", with: "")
     }
 }
-

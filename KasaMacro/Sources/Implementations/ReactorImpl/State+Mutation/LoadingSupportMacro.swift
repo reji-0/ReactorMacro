@@ -13,8 +13,10 @@ import Foundation
 import SwiftDiagnostics
 
 /*
+ @LoadingSupport
+ 
  Reactor Class의 위에 붙여 사용합니다.
- LoadingState, LoadingMutation을 한번에 처리해줍니다.
+ @LoadingState, @LoadingMutation을 한번에 처리해줍니다.
  */
 
 public struct LoadingSupportMacro: MemberAttributeMacro {

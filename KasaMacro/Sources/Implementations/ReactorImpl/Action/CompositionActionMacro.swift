@@ -13,7 +13,8 @@ import Foundation
 import SwiftDiagnostics
 
 public struct CompositionActionMacro: @preconcurrency MemberAttributeMacro {
-    @MainActor public static func expansion(
+    @MainActor
+    public static func expansion(
         of node: SwiftSyntax.AttributeSyntax,
         attachedTo declaration: some SwiftSyntax.DeclGroupSyntax,
         providingAttributesFor member: some SwiftSyntax.DeclSyntaxProtocol,

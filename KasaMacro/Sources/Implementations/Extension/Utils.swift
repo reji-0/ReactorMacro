@@ -13,32 +13,13 @@ import SwiftDiagnostics
 
 import KasaMacroShared
 
-func extractParameters(_ node: AttributeSyntax) -> [String] {
-   var parameters: [String] = []
-   
-   if let args = node.arguments?.as(LabeledExprListSyntax.self),
-      let firstArg = args.first?.expression {
-       if let arrayExpr = firstArg.as(ArrayExprSyntax.self) {
-           for element in arrayExpr.elements {
-               if let stringLiteral = element.expression.as(StringLiteralExprSyntax.self) {
-                   let stringValue = stringLiteral.segments.compactMap { segment in
-                       segment.as(StringSegmentSyntax.self)?.content.text
-                   }.joined()
-                   parameters.append(stringValue)
-               }
-           }
-       }
-   }
-   return parameters
-}
-
 @MainActor
 func extractStateOptionSet(_ node: AttributeSyntax) -> StateOptionSet {
     guard let arguments = node.arguments?.as(LabeledExprListSyntax.self),
           let firstArg = arguments.first?.expression.as(ArrayExprSyntax.self) else {
         return []
     }
-    var features: StateOptionSet = []
+    var optionSet: StateOptionSet = []
     
     for element in firstArg.elements {
         let memberAccess = element.expression.as(MemberAccessExprSyntax.self)
@@ -66,7 +47,7 @@ func extractActionSet(_ node: AttributeSyntax) -> ActionOptionSet {
           let firstArg = arguments.first?.expression.as(ArrayExprSyntax.self) else {
         return []
     }
-    var features: ActionOptionSet = []
+    var optionSet: ActionOptionSet = []
     
     for element in firstArg.elements {
         let memberAccess = element.expression.as(MemberAccessExprSyntax.self)

@@ -13,8 +13,10 @@ import Foundation
 import SwiftDiagnostics
 
 /*
+ @RefreshSupport
+ 
  Reactor Class의 위에 붙여 사용합니다.
- RefreshState, RefreshMutation을 한번에 처리해줍니다.
+ @RefreshState, @RefreshMutation을 한번에 처리해줍니다.
  */
 
 public struct RefreshSupportMacro: MemberAttributeMacro {

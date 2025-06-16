@@ -5,9 +5,9 @@
 //  Created by reji on 5/14/25.
 //
 
-
 import KasaMacroShared
 
+/// 파라미터로 받아 여러개의 `State`값을 자동으로 추가합니다.
 @attached(memberAttribute)
 public macro CompositionState(_ states: StateOptionSet = []) = #externalMacro(module: "Implementations", type: "CompositionStateMacro")
 

@@ -13,7 +13,8 @@ import SwiftDiagnostics
 
 extension DeclGroupSyntax {
     
-    public func validateStateStruct(
+    /// `State`이름을 갖고있는 구조체 타입인지 검증합니다.
+    func validateStateStruct(
         macroName: String,
         node: AttributeSyntax,
         context: some MacroExpansionContext
@@ -30,8 +31,8 @@ extension DeclGroupSyntax {
 
         return structDecl
     }
-
-    public func validateMutationEnum(
+    /// `Mutation`이름을 갖고있는 열거형 타입인지 검증합니다.
+    func validateMutationEnum(
         macroName: String,
         node: AttributeSyntax,
         context: some MacroExpansionContext
@@ -48,8 +49,8 @@ extension DeclGroupSyntax {
 
         return enumDecl
     }
-
-    public func validateActionEnum(
+    /// `Action`이름을 갖고있는 열거형 타입인지 검증합니다.
+    func validateActionEnum(
         macroName: String,
         node: AttributeSyntax,
         context: some MacroExpansionContext
@@ -66,7 +67,7 @@ extension DeclGroupSyntax {
 
         return enumDecl
     }
-
+    /// `Reactor`를 상속받는 클래스인지 검증합니다.
     func validateReactorClass(
         macroName: String,
         node: AttributeSyntax,

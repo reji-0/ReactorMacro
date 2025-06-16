@@ -12,8 +12,14 @@ import SwiftSyntaxMacros
 import Foundation
 import SwiftDiagnostics
 
-public struct CompositionSupportMacro: MemberAttributeMacro {
-    public static func expansion(
+
+/*
+@CompositionSupport([StateOptionSet...])
+ 
+StateOptionSet 타입들을 파라미터로 받아, 여러개의 Support를 작성합니다.
+ */
+public struct CompositionSupportMacro: @preconcurrency MemberAttributeMacro {
+    @MainActor public static func expansion(
         of node: SwiftSyntax.AttributeSyntax,
         attachedTo declaration: some SwiftSyntax.DeclGroupSyntax,
         providingAttributesFor member: some SwiftSyntax.DeclSyntaxProtocol,
@@ -23,20 +29,20 @@ public struct CompositionSupportMacro: MemberAttributeMacro {
             return []
         }
         
-        let params = extractParameters(node)
+        let params = extractStateOptionSet(node)
         var attributes = [AttributeSyntax]()
         
         if let structDecl = member.as(StructDeclSyntax.self),
            structDecl.name.text == "State" {
-            if params.contains("loading") {
+            if params.contains(.loading) {
                 attributes.append(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("LoadingState"))))
             }
             
-            if params.contains("refresh") {
+            if params.contains(.refresh) {
                 attributes.append(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("RefreshState"))))
             }
             
-            if params.contains("error") {
+            if params.contains(.error) {
                 attributes.append(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("ErrorState"))))
             }
             
@@ -46,15 +52,15 @@ public struct CompositionSupportMacro: MemberAttributeMacro {
         if let enumDecl = member.as(EnumDeclSyntax.self),
            enumDecl.name.text == "Mutation" {
             
-            if params.contains("loading") {
+            if params.contains(.loading) {
                 attributes.append(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("LoadingMutation"))))
             }
             
-            if params.contains("refresh") {
+            if params.contains(.refresh) {
                 attributes.append(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("RefreshMutation"))))
             }
             
-            if params.contains("error") {
+            if params.contains(.error) {
                 attributes.append(AttributeSyntax(attributeName: IdentifierTypeSyntax(name: .identifier("ErrorMutation"))))
             }
             

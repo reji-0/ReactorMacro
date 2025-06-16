@@ -7,6 +7,7 @@
 
 import KasaMacroShared
 
+/// 파라미터를 받아 여러개의 `Mutation` case를 자동으로 추가합니다.
 @attached(memberAttribute)
 public macro CompositionMutation(_ mutations: [StateOptionSet] = []) = #externalMacro(module: "Implementations", type: "CompositionMutationMacro")
 
