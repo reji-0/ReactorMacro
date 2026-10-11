@@ -1,15 +1,17 @@
 import Foundation
+import ReactorKit
 import ReactorMacro
+import RxSwift
 
 
 @GenerateReduce([.error, .loading, .refresh])
 @CompositionAction([.initialize, .refresh])
 @CompositionSupport([.error, .loading, .refresh])
-class ExampleReactor: Reactor  {
+final class ExampleReactor: Reactor {
     enum Action {
     }
 
-    enum Mutation{
+    enum Mutation {
         case setIsLoadingMore(Bool)
         case setItemList([Int])
         case setHasMore(Bool)
@@ -21,20 +23,33 @@ class ExampleReactor: Reactor  {
         var hasMore: Bool = false       // 페이징 가능, 불가능 상태
     }
     
-    func mutate(action: Action)  {
+    let initialState = State()
+    
+    func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .initialize, .refresh:
-            break
+        case .initialize:
+            return .concat(
+                .just(.setIsLoading(true)),
+                .just(.setItemList([1, 2, 3])),
+                .just(.setIsLoading(false))
+            )
+            
+        case .refresh:
+            return .concat(
+                .just(.setIsRefreshing(true)),
+                .just(.setItemList([4, 5, 6])),
+                .just(.setIsRefreshing(false))
+            )
         }
     }
 }
 
 
 let reactor = ExampleReactor()
-var state = ExampleReactor.State()
+let disposable = reactor.state.subscribe(onNext: { state in
+    print(state.itemList, state.isLoading, state.isRefreshing, state.error as Any)
+})
 
-state = reactor.reduce(state: state, mutation: .setItemList([1, 2, 3]))
-state = reactor.reduce(state: state, mutation: .setIsLoading(true))
-state = reactor.reduce(state: state, mutation: .setIsRefreshing(true))
-
-print(state.itemList, state.isLoading, state.isRefreshing, state.error as Any)
+reactor.action.onNext(.initialize)
+reactor.action.onNext(.refresh)
+disposable.dispose()

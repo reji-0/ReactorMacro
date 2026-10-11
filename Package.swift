@@ -15,6 +15,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "600.0.0"),
+        .package(url: "https://github.com/ReactorKit/ReactorKit.git", from: "3.2.0"),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.0.0"),
     ],
     targets: [
         /// 공통 타입 모듈
@@ -38,12 +40,20 @@ let package = Package(
             name: "ReactorMacro",
             dependencies: [
                 "ReactorMacroShared",
-                "ReactorMacroPlugin"
+                "ReactorMacroPlugin",
+                .product(name: "ReactorKit", package: "ReactorKit"),
             ]
         ),
         
         /// 클라이언트 (매크로 동작 확인용 예제, 외부로 노출되지 않음)
-        .executableTarget(name: "ReactorMacroClient", dependencies: ["ReactorMacro"]),
+        .executableTarget(
+            name: "ReactorMacroClient",
+            dependencies: [
+                "ReactorMacro",
+                .product(name: "ReactorKit", package: "ReactorKit"),
+                .product(name: "RxSwift", package: "RxSwift"),
+            ]
+        ),
         
         /// 테스트
         .testTarget(
