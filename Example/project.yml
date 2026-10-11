@@ -1,0 +1,35 @@
+name: ReactorMacroExample
+options:
+  deploymentTarget:
+    iOS: "15.0"
+packages:
+  ReactorMacro:
+    path: ..
+  ReactorKit:
+    url: https://github.com/ReactorKit/ReactorKit.git
+    from: 3.2.0
+  RxSwift:
+    url: https://github.com/ReactiveX/RxSwift.git
+    from: 6.0.0
+targets:
+  ReactorMacroExample:
+    type: application
+    platform: iOS
+    sources:
+      - ReactorMacroExample
+    dependencies:
+      - package: ReactorMacro
+      - package: ReactorKit
+      - package: RxSwift
+        product: RxSwift
+      - package: RxSwift
+        product: RxCocoa
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.ReactorMacroExample
+        SWIFT_VERSION: "5.0"
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
