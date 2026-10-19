@@ -9,8 +9,11 @@ import ReactorKit
 import ReactorMacro
 
 @GenerateReduce([.loading, .error])
+
 @CompositionAction([.initialize, .refresh])
+
 @CompositionSupport([.loading, .error])
+
 final class NoticeReactor: Reactor {
     enum Action { }
 
